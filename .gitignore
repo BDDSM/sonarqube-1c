@@ -1,0 +1,12 @@
+# Directories
+sonar-scanner/**/
+projects/**/
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.zip
+*.tar.gz
+*.rar

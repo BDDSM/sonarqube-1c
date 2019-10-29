@@ -1,0 +1,34 @@
+version: "3"
+services:
+  sonar:
+    build: ./sonarqube
+    container_name: sonarqube-server
+    command: -Dsonar.ce.javaOpts=-Xmx4g -Dsonar.web.javaOpts=-Xmx4g
+    ports:
+      - 9000:9000
+    networks:
+      - sonarnetwork
+    environment:
+      - sonar.jdbc.url=jdbc:postgresql://postgresql:5432/sonar
+    depends_on:
+      - postgresql
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+  postgresql:
+    image: postgres
+    container_name: sonarqube-postgres
+    networks:
+      - sonarnetwork
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+networks:
+  sonarnetwork:
+    driver: bridge
+volumes:
+  sonarqube_data:
+  postgresql:
+  postgresql_data:
